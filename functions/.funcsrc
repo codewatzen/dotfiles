@@ -1,0 +1,85 @@
+# ==============================================
+# File Operations
+# ==============================================
+
+# Extract common archive formats
+# Usage: extract <file>
+# Supported formats: .tar.gz, .tar.xz, .zip, .gz, .tar.bz2, .tar, .7z
+extract() {
+  if [ -f "$1" ]; then
+    case "$1" in
+      *.tar.gz)   tar xzf "$1" ;;
+      *.tar.xz)   tar xJf "$1" ;;
+      *.tar.bz2)  tar xjf "$1" ;;
+      *.tar)      tar xf "$1" ;;
+      *.zip)      unzip "$1" ;;
+      *.gz)       gunzip "$1" ;;
+      *.7z)       7z x "$1" ;;
+      *)          echo "Unsupported file format: $1" >&2
+                  return 1 ;;
+    esac
+  else
+    echo "File not found: $1" >&2
+    return 1
+  fi
+}
+
+# Create timestamped compressed archive
+# Usage: compress <file/dir1> [<file/dir2> ...]
+# Output: YYYYMMDD-<file/dir1>.tar.gz
+compress() {
+  if [ $# -eq 0 ]; then
+    echo "Usage: compress <file/dir> [additional files...]" >&2
+    return 1
+  fi
+
+  # Get timestamp and base name
+  local timestamp="$(date +%Y%m%d)"
+  local base_name="$(basename "$1")"
+  local archive_name="${timestamp}-${base_name}.tar.gz"
+
+  # Create compressed archive
+  if tar cvzf "$archive_name" "$@"; then
+    echo "\nCreated archive: ${archive_name}"
+  else
+    echo "Compression failed" >&2
+    return 1
+  fi
+}
+
+# Create directory and navigate into it
+# Usage: mkcd <directory-name>
+mkcd() {
+  mkdir -p "$1" && cd "$1" || return 1
+}
+
+# ==============================================
+# Development & Productivity Tools
+# ==============================================
+
+# Calculate pomodoro sessions from total minutes
+# Usage: pom <hours> [minutes] [pomodoro-duration]
+# Default: 25 minute pomodoro sessions
+pom() {
+  local -r hours=${1:?"Missing hours parameter"}
+  local -r minutes=${2:-0}
+  local -r pomodoro_duration=${3:-25}
+
+  bc <<< "(($hours * 60) + $minutes) / $pomodoro_duration"
+}
+
+# Quick access to cheat sheets (requires internet)
+# Usage: cheat <command/topic>
+# Example: cheat tar
+cheat() {
+  curl -s "cheat.sh/${1}"
+}
+
+# ==============================================
+# Network Operations
+# ==============================================
+
+# Get public IP address (external network check)
+ipinfo() {
+  curl -s ifconfig.co/json | jq
+}

@@ -1,0 +1,131 @@
+# ==============================================
+# Directory Navigation & History
+# ==============================================
+# Directory stack navigation (1-9 to jump)
+alias d='dirs -v'  # List directory stack with index numbers
+for index ({1..9}) alias "$index"="cd +${index}"; unset index  # Jump to past directories using index 1-9
+
+# Quick directory traversal
+alias ..='cd ..'
+alias ...='cd ../../'
+alias ....='cd ../../../'
+alias .....='cd ../../../../'
+alias ......='cd ../../../../../'
+
+# ==============================================
+# Shell Utilities
+# ==============================================
+# Shortcuts to clear screen, exit and source
+alias c="clear"   # Clear terminal screen
+alias e="exit"    # Exit terminal
+alias .="source"  # Reload shell session
+
+# ==============================================
+# File Operations & Search
+# ==============================================
+# Enhanced ls commands
+alias ls='ls --color=auto -hF'   # Colorized, human-readable, classify
+alias la='ls -lAthr'             # Long format, all files, sorted by time
+alias ll='ls -lahF'              # Long listing with classification
+alias l.='ls -d .* --color=auto' # Show hidden files
+
+# File management utilities
+alias mkdir='mkdir -pv'         # Create parent directories as needed
+alias fd='fdfind'               # Modern find alternative
+alias diff='colordiff'          # Colorized diff output
+alias wget='wget -c'            # Resumable downloads
+
+# Search enhancements
+alias grep='grep --color=auto'  # Colorized grep
+alias fgrep='grep -Ri'          # Case-insensitive recursive search
+alias ff='find . -type f -name' # Find files by name
+
+# ==============================================
+# System Monitoring & Process Management
+# ==============================================
+# Process monitoring
+alias topcpu="ps -eo pid,ppid,cmd,%mem,%cpu --sort=-%cpu | head -10"  # Show top 10 CPU-consuming processes
+alias topmem="ps -eo pid,ppid,cmd,%mem,%cpu --sort=-%mem | head -10"  # Show top 10 memory-consuming processes
+alias psmem='ps auxf | sort -nr -k 4'        # Sort processes by memory usage
+alias pscpu='ps auxf | sort -nr -k 3'        # Sort processes by CPU usage
+
+# System resource info
+alias meminfo='free -m -l -t'    # Display memory usage
+alias cpuinfo='lscpu'            # CPU architecture info
+alias gpumeminfo='grep -i --color memory /var/log/Xorg.0.log'  # GPU memory
+
+# Network ports monitoring
+alias ports='netstat -tulanp'    # Open ports (netstat)
+alias ssports='ss -tulpn'        # Open ports (ss)
+
+# ==============================================
+# System Maintenance & Package Management
+# ==============================================
+# Apt shortcuts
+alias update='sudo apt update'  # Update package lists
+alias upgrade='sudo apt upgrade -y'  #Upgrade installed packages
+alias fup='sudo apt update && sudo apt upgrade -y'  # Full system update and upgrade
+alias cleanup='sudo apt autoremove -y && sudo apt clean'  # Remove unnecessary packages
+
+# System utilities
+alias freemem='sync && echo 3 | sudo tee /proc/sys/vm/drop_caches'  # Clear cache
+
+# ==============================================
+# Network Utilities
+# ==============================================
+# Connectivity tools
+alias ip='curl -s icanhazip.com'             # Public IP address
+alias localip='hostname -I | awk '\''{print $1}'\'  # Local IP address
+alias ping='ping -c 5'                       # Stop pings after 5 requests
+alias fastping='ping -c 100 -s.2'            # Faster ping with smaller interval
+
+# Fun network tools
+alias weather='curl wttr.in'                 # Weather forecast
+alias starwars='telnet towel.blinkenlights.nl'  # ASCII Star Wars
+
+# ==============================================
+# Development & Scripting
+# ==============================================
+# Python environment
+alias python='python3'
+alias pip='pip3'
+
+# Development tools
+alias calc='bc -l'                           # CLI calculator
+
+# ==============================================
+# Clipboard Utilities
+# ==============================================
+alias cl='fc -e - | pbcopy'                 # Copy last command output
+alias cpwd='pwd | tr -d "\n" | pbcopy'      # Copy current directory path
+
+# ==============================================
+# Configuration Management
+# ==============================================
+# Edit and reload configs
+alias ezsh="micro ${ZDOTDIR}/.zshrc"        # Edit zshrc with micro
+alias ealias="micro ${CONFIG}/.alias"       # Edit aliases with micro
+alias zreload=". ${ZDOTDIR}/.zshrc"         # Reload Zsh config
+alias areload=". ${CONFIG}/.alias"          # Reload aliases
+alias .='source'                            # Universal source command
+
+# ==============================================
+# Miscellaneous Shortcuts
+# ==============================================
+# System information
+alias now='date +"%T"'                      # Current time
+alias nowdate='date +"%d-%m-%Y"'            # Current date
+alias mount='mount | column -t'             # Tabular mount output
+
+# History and jobs
+alias h='history'                           # Command history
+alias j='jobs -l'                           # Background jobs
+alias path='echo -e ${PATH//:/\\n}'         # PATH variable breakdown
+
+# ==============================================
+# Safety Features
+# ==============================================
+# Interactive confirmation
+alias mv='mv -i'
+alias cp='cp -i'
+alias ln='ln -i'
