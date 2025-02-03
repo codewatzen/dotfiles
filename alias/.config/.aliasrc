@@ -103,9 +103,9 @@ alias cpwd='pwd | tr -d "\n" | pbcopy'      # Copy current directory path
 # Configuration Management
 # ==============================================
 # Edit and reload configs
-alias ezsh="micro ${ZDOTDIR}/.zshrc"        # Edit zshrc with micro
+alias ezsh="micro ${HOME}/.zshrc"        # Edit zshrc with micro
 alias ealias="micro ${CONFIG}/.alias"       # Edit aliases with micro
-alias zreload=". ${ZDOTDIR}/.zshrc"         # Reload Zsh config
+alias zreload=". ${HOME}/.zshrc"         # Reload Zsh config
 alias areload=". ${CONFIG}/.alias"          # Reload aliases
 alias .='source'                            # Universal source command
 

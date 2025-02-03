@@ -1,7 +1,7 @@
 # ==============================================
 # Environment Variables
 # ==============================================
-export DOTDIR="${HOME}/.config/dotfolder"
+export DOTDIR="${HOME}/.config/dotfiles"
 export ZDOTDIR="${DOTDIR}/zsh"
 export CONFIG="${HOME}/.config"
 export TERM="tmux-256color"                 # Support 256 colors in tmux
@@ -17,8 +17,8 @@ export BROWSER="firefox"
 # Plugin & Configuration Sourcing
 # ==============================================
 # Load custom functions and aliases
-source "${DOTDIR}/.aliasrc"
-source "${DOTDIR}/.funcsrc"
+source "${CONFIG}/.aliasrc"
+source "${CONFIG}/Functions/.funcsrc"
 
 # Zsh plugins
 source "${ZDOTDIR}/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh"
@@ -27,7 +27,7 @@ source "${ZDOTDIR}/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
 # ==============================================
 # History Configuration
 # ==============================================
-HISTFILE="${ZDOTDIR}/.zsh_history"
+HISTFILE="${HOME}/.zsh_history"
 HISTSIZE=100000
 SAVEHIST=100000
 
