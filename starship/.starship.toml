@@ -1,0 +1,45 @@
+format = """
+$directory\
+$cmd_duration\
+$fill\
+$git_branch\
+$git_status\
+$lua\
+$python\
+$nodejs\
+$docker_context\
+$jobs\
+$line_break\
+$character """
+
+# Replace the 'Γ¥»' symbol in the prompt with 'Γ₧£'
+[character] # The name of the module we are configuring is 'character'
+# A continuation prompt that displays two filled-in arrows
+success_symbol = '▶ (bold green)'
+# A continuation prompt that displays two filled-in arrows
+continuation_prompt = '▶▶ '
+
+[fill]
+symbol = ' '
+
+[directory]
+style = 'bold fg:green'
+format = '[$path ]($style)'
+truncation_length = 3
+truncation_symbol = '.../'
+truncate_to_repo = false
+
+[cmd_duration]
+format = '\[[⏱ $duration]($style)\]'
+
+[docker_context]
+format = '\[[$symbol$context]($style)\]'
+
+[git_branch]
+format = '\[[$symbol$branch]($style)\]'
+
+[git_status]
+format = '([\[$all_status$ahead_behind\]]($style))'
+
+[os]
+format = '\[[$symbol]($style)\]'
