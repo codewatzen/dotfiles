@@ -18,6 +18,8 @@ stow scripts -d dotfiles/ -t ~/.config/scripts/
 
 stow alias -d dotfiles/ -t ~/.config/
 
+stow micro -d dotfiles/ -t ~/.config/micro/
+
 # Initialize submodules
 git submodule update --init --recursive
 
