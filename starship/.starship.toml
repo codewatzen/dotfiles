@@ -1,7 +1,19 @@
+command_timeout = 5000
+add_newline = true
+# A continuation prompt that displays two filled-in arrows
+continuation_prompt = '[▶▶](bold grey)'
+
 format = """
+[](bg:wa_clear fg:wa_grey)\
+$os\
+$username\
+[](fg:wa_grey bg:wa_blue)\
 $directory\
-$cmd_duration\
+[](fg:wa_blue bg:wa_gold)\
+$time\
+[](fg:wa_gold bg:wa_clear)\
 $fill\
+[◀](fg:wa_grey bg:wa_grey)\
 $git_branch\
 $git_status\
 $lua\
@@ -9,25 +21,79 @@ $python\
 $nodejs\
 $docker_context\
 $jobs\
+$cmd_duration\
 $line_break\
-$character """
+[╰─❯$character](fg:wa_green)
+"""
 
-# Replace the 'Γ¥»' symbol in the prompt with 'Γ₧£'
-[character] # The name of the module we are configuring is 'character'
-# A continuation prompt that displays two filled-in arrows
-success_symbol = '▶ (bold green)'
-# A continuation prompt that displays two filled-in arrows
-continuation_prompt = '▶▶ '
+palette = 'watzen'
 
-[fill]
-symbol = ' '
+[palettes.watzen]
+wa_green = '#009b00'
+wa_orange = '#E95420'
+wa_black = '#000000'
+wa_grey = '#363638'
+wa_clear = '#030B16'
+wa_blue = '#0c5deb'
+wa_white = '#fbf1c7'
+wa_gold = '#ccb233'
+wa_purple = '#5306bf'
+wa_red = '#d93030'
+
+
+[os]
+disabled = false
+style = 'bg:wa_grey fg:wa_green'
+
+[os.symbols]
+Windows = "󰍲"
+Ubuntu = "󰕈"
+SUSE = ""
+Raspbian = "󰐿"
+Mint = "󰣭"
+Macos = "󰀵"
+Manjaro = ""
+Linux = "󰌽"
+Gentoo = "󰣨"
+Fedora = "󰣛"
+Alpine = ""
+Amazon = ""
+Android = ""
+Arch = "󰣇"
+Artix = "󰣇"
+EndeavourOS = ""
+CentOS = ""
+Debian = "󰣚"
+Redhat = "󱄛"
+RedHatEnterprise = "󱄛"
+Pop = ""
+
+[username]
+show_always = true
+style_user = 'bg:wa_grey fg:wa_green'
+style_root = 'bg:wa_grey fg:wa_white'
+format = '[ $user ]($style)'
 
 [directory]
-style = 'bold fg:green'
-format = '[$path ]($style)'
+format = "[ 📁 $path ]($style)"
+style = "fg:wa_white bg:wa_blue"
 truncation_length = 3
 truncation_symbol = '.../'
 truncate_to_repo = false
+
+[time]
+disabled = false
+time_format = "%R" # Hour:Minute Format
+style = "bg:wa_gold"
+format = '[[ 󱑍 $time ](bg:wa_gold fg:wa_black)]($style)'
+
+# Replace the '╬ô┬Ñ┬╗' symbol in the prompt with '╬ôΓéº┬ú'
+[character] # The name of the module we are configuring is 'character'
+# A continuation prompt that displays two filled-in arrows
+success_symbol = '[▶](bold green)'
+
+[fill]
+symbol = ' '
 
 [cmd_duration]
 format = '\[[⏱ $duration]($style)\]'
@@ -36,10 +102,18 @@ format = '\[[⏱ $duration]($style)\]'
 format = '\[[$symbol$context]($style)\]'
 
 [git_branch]
-format = '\[[$symbol$branch]($style)\]'
+style = 'fg:wa_gold bg:wa_grey'
+symbol = ' '
+format = '[on ](fg:white bg:wa_grey)[$symbol$branch ]($style)'
 
 [git_status]
+style = 'bg:wa_grey fg:wa_gold'
 format = '([\[$all_status$ahead_behind\]]($style))'
 
-[os]
-format = '\[[$symbol]($style)\]'
+[python]
+style = 'yellow'
+symbol = " "
+format = '[${symbol}${pyenv_prefix}(${version} )(\($virtualenv\) )]($style)'
+version_format = '${raw}'
+pyenv_version_name = false
+pyenv_prefix = ''
