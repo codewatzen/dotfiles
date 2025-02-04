@@ -47,12 +47,13 @@ dotfiles_check
 
 # Stow (symlink) dotfiles to their target locations
 stow_configs() {
-    stow zsh -d dotfiles/ -t ~
+    stow zsh -d dotfiles/ -t ~ --ignore='plugins'
     stow -d dotfiles/zsh -t ~/.config/zsh/plugins plugins
     stow functions -d dotfiles/ -t ~/.config/functions
     stow scripts -d dotfiles/ -t ~/.config/scripts/
     stow alias -d dotfiles/ -t ~/.config/
     stow micro -d dotfiles/ -t ~/.config/micro/
+	stow starship -d dotfiles/ -t ~/.config/
 }
 
 stow_configs
