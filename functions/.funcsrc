@@ -6,23 +6,34 @@
 # Usage: extract <file>
 # Supported formats: .tar.gz, .tar.xz, .zip, .gz, .tar.bz2, .tar, .7z
 extract() {
-  if [ -f "$1" ]; then
-    case "$1" in
-      *.tar.gz)   tar xzf "$1" ;;
-      *.tar.xz)   tar xJf "$1" ;;
-      *.tar.bz2)  tar xjf "$1" ;;
-      *.tar)      tar xf "$1" ;;
-      *.zip)      unzip "$1" ;;
-      *.gz)       gunzip "$1" ;;
-      *.7z)       7z x "$1" ;;
-      *)          echo "Unsupported file format: $1" >&2
-                  return 1 ;;
-    esac
-  else
-    echo "File not found: $1" >&2
-    return 1
-  fi
-}
+    if [ -f "$1" ]; then
+      local output_dir="."
+      if [ -n "$2" ]; then
+        output_dir="$2"
+        mkdir -p "$output_dir"
+      fi
+      case "$1" in
+        *.tar.gz)   tar xzf "$1" -C "$output_dir" ;;
+        *.tar.xz)   tar xJf "$1" -C "$output_dir" ;;
+        *.tar.bz2)  tar xjf "$1" -C "$output_dir" ;;
+        *.tar)      tar xf "$1" -C "$output_dir" ;;
+        *.zip)      unzip "$1" -d "$output_dir" ;;
+        *.gz)
+          if [ "$output_dir" != "." ]; then
+            gunzip -c "$1" > "$output_dir/$(basename "${1%.gz}")"
+          else
+            gunzip "$1"
+          fi
+          ;;
+        *.7z)       7z x "$1" -o"$output_dir" ;;
+        *)          echo "Unsupported file format: $1" >&2
+                    return 1 ;;
+      esac
+    else
+      echo "File not found: $1" >&2
+      return 1
+    fi
+ }
 
 # Create timestamped compressed archive
 # Usage: compress <file/dir1> [<file/dir2> ...]

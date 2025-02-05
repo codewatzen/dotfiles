@@ -74,7 +74,7 @@ style_root = 'bg:wa_grey fg:wa_white'
 format = '[ $user ]($style)'
 
 [directory]
-format = "[ 📁 $path ]($style)"
+format = "[  $path ]($style)"
 style = "fg:wa_white bg:wa_blue"
 truncation_length = 3
 truncation_symbol = '.../'
