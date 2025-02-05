@@ -114,7 +114,7 @@ format = '([\[$all_status$ahead_behind\]]($style))'
 [python]
 style = 'fg:wa_red'
 symbol = "  "
-format = '[${symbol}${pyenv_prefix}(${version})(\($virtualenv\))]($style)'
+format = '($symbol $virtualenv)($style)'
 version_format = '${raw}'
 pyenv_version_name = false
 pyenv_prefix = ''
