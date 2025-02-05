@@ -13,6 +13,7 @@ $directory\
 $time\
 [](fg:wa_gold bg:wa_clear)\
 $fill\
+$cmd_duration\
 $git_branch\
 $git_status\
 $lua\
@@ -20,7 +21,6 @@ $python\
 $nodejs\
 $docker_context\
 $jobs\
-$cmd_duration\
 $line_break\
 [╰─❯$character](fg:wa_green)
 """
