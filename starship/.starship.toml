@@ -13,7 +13,6 @@ $directory\
 $time\
 [](fg:wa_gold bg:wa_clear)\
 $fill\
-[◀](fg:wa_grey bg:wa_grey)\
 $git_branch\
 $git_status\
 $lua\
@@ -84,36 +83,38 @@ truncate_to_repo = false
 [time]
 disabled = false
 time_format = "%R" # Hour:Minute Format
-style = "bg:wa_gold"
-format = '[[ 󱑍 $time ](bg:wa_gold fg:wa_black)]($style)'
+style = "bg:wa_gold fg:wa_black"
+format = '[ 󱑍 $time ]($style)'
 
 # Replace the '╬ô┬Ñ┬╗' symbol in the prompt with '╬ôΓéº┬ú'
 [character] # The name of the module we are configuring is 'character'
 # A continuation prompt that displays two filled-in arrows
-success_symbol = '[▶](bold green)'
+success_symbol = '[✓](bold green) '
+error_symbol = '[✗](bold red) '
 
 [fill]
 symbol = ' '
 
 [cmd_duration]
-format = '\[[⏱ $duration]($style)\]'
+style = 'fg:wa_green'
+format = '[⏱ $duration]($style)'
 
 [docker_context]
 format = '\[[$symbol$context]($style)\]'
 
 [git_branch]
-style = 'fg:wa_gold bg:wa_grey'
+style = 'fg:wa_red'
 symbol = ' '
-format = '[on ](fg:white bg:wa_grey)[$symbol$branch ]($style)'
+format = '[ on](fg:wa_white)[ $symbol$branch ]($style)'
 
 [git_status]
-style = 'bg:wa_grey fg:wa_gold'
+style = 'fg:wa_red'
 format = '([\[$all_status$ahead_behind\]]($style))'
 
 [python]
-style = 'yellow'
-symbol = " "
-format = '[${symbol}${pyenv_prefix}(${version} )(\($virtualenv\) )]($style)'
+style = 'fg:wa_red'
+symbol = "  "
+format = '[${symbol}${pyenv_prefix}(${version})(\($virtualenv\))]($style)'
 version_format = '${raw}'
 pyenv_version_name = false
 pyenv_prefix = ''
