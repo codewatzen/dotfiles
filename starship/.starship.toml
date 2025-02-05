@@ -89,8 +89,8 @@ format = '[ 󱑍 $time ]($style)'
 # Replace the '╬ô┬Ñ┬╗' symbol in the prompt with '╬ôΓéº┬ú'
 [character] # The name of the module we are configuring is 'character'
 # A continuation prompt that displays two filled-in arrows
-success_symbol = '[✓](bold green) '
-error_symbol = '[✗](bold red) '
+success_symbol = '[✓](bold wa_green) '
+error_symbol = '[✗](bold wa_red) '
 
 [fill]
 symbol = ' '
