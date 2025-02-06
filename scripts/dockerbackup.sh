@@ -1,50 +1,52 @@
-#!/usr/bin/env zsh
+#!/bin/bash
 
-# Docker Compose Backup Script
-# Backs up docker-compose.yml files from ~/docker to ~/docker-services,
-# preserving the original directory structure. Uses fd for efficient directory
-# scanning and handles special characters in filenames. This script was 
-# improved, optimized and commented by Deepseek R1
+# This script backs up Docker Compose files from all projects within a specific directory structure.
 
-# Exit on errors, unset variables, and pipe failures
-set -euo pipefail
+# Set the backup directory
+backup_dir="$HOME/docker-services"
 
-# Check for required fd/fdfind command
-if ! command -v fd &>/dev/null && ! command -v fdfind &>/dev/null; then
-    echo "Error: This script requires fd (install as 'fd' or 'fdfind')" >&2
-    exit 1
-fi
+# Function to handle the backup process
+backup_project() {
+    local source_dir="$1"
+    local dest_dir="$2"
+    local project_name="$3"
 
-# Set the appropriate command name for fd
-FD_CMD=$(command -v fd || command -v fdfind)
+    echo "Processing backup for: $project_name"
 
-# Configure directories
-SOURCE_DIR="$HOME/docker"
-BACKUP_DIR="$HOME/docker-services"
+    # Create the backup directory if it doesn't exist
+    mkdir -p "$dest_dir" 2>/dev/null
 
-echo "Starting Docker Compose backup from ${SOURCE_DIR} to ${BACKUP_DIR}"
-
-# Find all directories using fd (null-delimited for safe parsing)
-while IFS= read -r -d '' relative_path; do
-    # Construct full paths for source and backup locations
-    source_project="$SOURCE_DIR/$relative_path"
-    backup_project="$BACKUP_DIR/$relative_path"
-    
-    # Create backup directory (no error if exists)
-    mkdir -p "$backup_project"
-    
-    # Define compose file path
-    compose_file="$source_project/docker-compose.yml"
-    
-    # Copy if compose file exists
-    if [[ -f "$compose_file" ]]; then
-        echo "Backing up: $relative_path"
-        cp -f "$compose_file" "$backup_project/"
+    # Check if a docker-compose.yml file exists in the source directory
+    if [ -f "$source_dir/docker-compose.yml" ]; then
+        cp "$source_dir/docker-compose.yml" "$dest_dir"
+        echo "Copied docker-compose.yml for $project_name."
     else
-        echo "Warning: docker-compose.yml missing in $relative_path" >&2
+        echo "No docker-compose.yml found for $project_name."
     fi
+}
 
-done < <("$FD_CMD" --type d --base-directory "$SOURCE_DIR" \
-        --hidden --no-ignore --print0)
+# Iterate over each found project directory
+for dock_dir in $(fdfind . "/omni/apps" -t d -d 1); do
+    # Extract the project name from the directory path
+    project_name=$(basename "$dock_dir")
 
-echo "Backup completed successfully to ${BACKUP_DIR}"
+    # Check if arr_apps exists within this directory
+    if [ "$(basename "$(dirname "$dock_dir")")" = "arr_apps" ]; then
+        nested_dirs=$(fdfind . "$dock_dir" -t d -d 1)  # Adjusted to use absolute paths
+
+        # Iterate over each subdirectory and process it
+        echo "$nested_dirs" | while read -r nested_dir; do
+            nested_project_name=$(basename "$nested_dir")
+            backup_project "$nested_dir" "$backup_dir/$project_name/$nested_project_name" "$nested_project_name"
+        done
+
+        # Process the main arr_apps directory, ensuring no redundancy by using a conditional check
+        if [[ $project_name != "arr_apps" ]]; then
+            backup_project "$dock_dir" "$backup_dir/$project_name" "$project_name"
+        fi
+
+    else
+        # Process standalone projects directly in this directory
+        backup_project "$dock_dir" "$backup_dir/$project_name" "$project_name"
+    fi
+done
