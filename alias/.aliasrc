@@ -108,6 +108,8 @@ alias ealias="micro ${CONFIG}/.aliasrc"       # Edit aliases with micro
 alias zreload=". ${HOME}/.zshrc"         # Reload Zsh config
 alias areload=". ${CONFIG}/.aliasrc"          # Reload aliases
 alias .='source'                            # Universal source command
+alias sshagent="eval "$(ssh-agent -s)""  # Gets ssh-agent id
+alias sshadd="ssh-add"                   # shortened ssh-add
 
 # ==============================================
 # Miscellaneous Shortcuts
@@ -129,3 +131,14 @@ alias path='echo -e ${PATH//:/\\n}'         # PATH variable breakdown
 alias mv='mv -i'
 alias cp='cp -i'
 alias ln='ln -i'
+
+# =============================================
+# Git Shortcuts
+# =============================================
+# Git shortcuts 
+alias gi="git init"
+alias ga="git add ."
+alias gc="git commit -m"
+alias gac="git add . && git commit -m"
+alias gp="git push -u origin main"
+
