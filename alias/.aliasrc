@@ -107,7 +107,6 @@ alias ezsh="micro ${HOME}/.zshrc"        # Edit zshrc with micro
 alias ealias="micro ${CONFIG}/.aliasrc"       # Edit aliases with micro
 alias zreload=". ${HOME}/.zshrc"         # Reload Zsh config
 alias areload=". ${CONFIG}/.aliasrc"          # Reload aliases
-alias .='source'                            # Universal source command
 alias sshagent="eval "$(ssh-agent -s)""  # Gets ssh-agent id
 alias sshadd="ssh-add"                   # shortened ssh-add
 
@@ -135,10 +134,25 @@ alias ln='ln -i'
 # =============================================
 # Git Shortcuts
 # =============================================
-# Git shortcuts 
+# Aliases for git
 alias gi="git init"
 alias ga="git add ."
 alias gc="git commit -m"
 alias gac="git add . && git commit -m"
 alias gp="git push -u origin main"
 
+# ==============================================
+# Snapraid Shortcuts
+# ==============================================
+# Aliases for snapraid functions status, sync, touch, scrub
+alias snapstatus="sudo snapraid status"
+alias snapsync="sudo snapraid sync"
+alias snaptouch="sudo snapraid touch"
+alias snapscrub="sudo snapraid scrub"
+
+# =============================================
+# Docker Compose Shortcuts
+# =============================================
+# Aliases for docker compose commands
+alias dcup="docker compose up -d"
+alias dcdown="docker compose down"
