@@ -59,7 +59,7 @@ stow_configs() {
 stow_configs
 
 # Install Starship prompt if not already installed
-if ! command -v starship &>/dev/null; then
+if ! command -v starship 2&>/dev/null; then
     echo "Installing Starship..."
     curl -sS https://starship.rs/install.sh | sh
 else

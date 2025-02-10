@@ -81,3 +81,7 @@ zstyle ':completion:*' squeeze-slashes true  # Clean path completions
 # ==============================================
 # Initialize Starship prompt
 eval "$(starship init zsh)"
+
+if command -v fastfetch 2&>/dev/null; then 
+	fastfetch
+fi 
