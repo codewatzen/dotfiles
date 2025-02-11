@@ -1,0 +1,43 @@
+networks:
+  # If the application is needed to talk to database apps uncomment this network
+  # db_net:
+  #   driver: bridge
+  #   external: true
+  # If the application needs to go through traefik
+  proxy_net:
+    driver: bridge
+    external: true
+
+services:
+  <app_name>:
+  #I prefer keeping the service_name and the container_name the same
+    container_name: <app_name>
+    image: <image_name>
+    security_opt:
+      - no-new-privileges:true
+    restart: unless-stopped
+  # Check to see what the docker container needs on it's side either config, data, or etc
+    volumes:
+      - ${SRV_DIR}/<app_name>:/<config/data/etc>
+    networks:
+      - proxy_net
+  # Only comment these out if you are putting it behind traefik and don't need these ports exposed
+    ports:
+      - <host port used>:<port docker uses>
+    env_files:
+    - ./.env
+    - $HOME/docker/.envglobal
+    environment:
+      TZ: ${TZ}
+      PUID: ${PUID} 
+      PGID: ${PGID}
+    # labels:
+  # These labels are only used if the application is going through traefik
+      # traefik.enable: true
+  # Use ${mwBasic} if the application doesn't need to go through authelia
+  # Uncomment out the below line if you want to change the service url from <container name>.${URL}
+      # traefik.http.routers.<app_name>.rule: Host(`<non-container_name>.${URL}`)
+      # traefik.http.routers.<app_name>.middlewares: ${mwSecure}
+      # traefik.http.routers.<app_name>.entrypoints: websecure
+      # traefik.http.routers.<app_name>.service: svc-<app_name>
+      # traefik.http.services.svc-<app_name>.loadBalancer.server.port: <port used in expose section>
