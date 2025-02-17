@@ -122,7 +122,7 @@ alias mount='mount | column -t'             # Tabular mount output
 alias h='history'                           # Command history
 alias j='jobs -l'                           # Background jobs
 alias path='echo -e ${PATH//:/\\n}'         # PATH variable breakdown
-
+alias duf="duf /mnt/*"
 # ==============================================
 # Safety Features
 # ==============================================
